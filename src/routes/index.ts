@@ -9,6 +9,9 @@ const routes = (app: Express) => {
   app.use("/api/auth", AuthRouter);
   app.use("/api/family", useAuth, FamilyRouter);
   app.use("/api/expense-category", useAuth, useFamily, ExpenseCategoryRouter);
+  app.get("/", (req, res) => {
+    res.send("Hello World");
+  });
 };
 
 export default routes;
