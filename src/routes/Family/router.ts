@@ -16,7 +16,7 @@ router.post("/create", async (req, res) => {
     { families: [family._id] }
   );
 
-  res.sendResponse("200", { familyName });
+  res.sendResponse("200", { familyName }, true);
 });
 
 router.post("/add-member", async (req, res) => {
@@ -30,7 +30,7 @@ router.post("/add-member", async (req, res) => {
     familyId: new mongoose.Types.ObjectId(familyId),
   });
 
-  res.sendResponse("200", "Request sent");
+  res.sendResponse("200", "Request sent", true);
 });
 
 router.post("/join-request", async (req, res) => {
@@ -61,7 +61,7 @@ router.get("/get-all", async (req, res) => {
   const user = await Users.findOne({ phoneNumber: req.user.phoneNumber });
   const families = await Family.find({ _id: { $in: user?.families } });
 
-  res.sendResponse("200", families);
+  res.sendResponse("200", families, true);
 });
 
 export default router;

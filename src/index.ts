@@ -7,7 +7,7 @@ import bootstrap from "./helpers/bootstrap";
 declare global {
   namespace Express {
     interface Response {
-      sendResponse: (code: string, data: any) => void;
+      sendResponse: (code: string, data: any, isSuccess?: boolean) => void;
     }
   }
 }

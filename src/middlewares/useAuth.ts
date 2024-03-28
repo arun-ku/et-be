@@ -21,10 +21,10 @@ const useAuth = (req: Request, res: Response, next: NextFunction) => {
       req.user = decodedToken;
       next();
     } catch (error) {
-      return res.sendResponse("401", "Unauthorized");
+      return res.sendResponse("401", "Unauthorized", false);
     }
   } else {
-    return res.sendResponse("401", "Unauthorized");
+    return res.sendResponse("401", "Unauthorized", false);
   }
 };
 

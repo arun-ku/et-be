@@ -12,7 +12,7 @@ router.get("/list", async (req, res) => {
     .lean()
     .exec();
 
-  return res.sendResponse("200", expenses);
+  return res.sendResponse("200", expenses, true);
 });
 
 router.post("/create", async (req, res) => {
@@ -32,9 +32,9 @@ router.post("/create", async (req, res) => {
       categoryId,
     });
 
-    return res.sendResponse("200", expense);
+    return res.sendResponse("200", expense, true);
   } else {
-    return res.sendResponse("408", "User not found.");
+    return res.sendResponse("408", "User not found.", false);
   }
 });
 

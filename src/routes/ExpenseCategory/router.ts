@@ -11,7 +11,7 @@ router.get("/list", async (req, res) => {
     .lean()
     .exec();
 
-  return res.sendResponse("200", expenseCategories);
+  return res.sendResponse("200", expenseCategories, true);
 });
 
 router.post("/create", async (req, res) => {
@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
     categoryIcon,
   });
 
-  return res.sendResponse("200", expenseCategory);
+  return res.sendResponse("200", expenseCategory, true);
 });
 
 export default router;
