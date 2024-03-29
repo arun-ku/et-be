@@ -29,7 +29,11 @@ router.post("/create", async (req, res) => {
   console.log(doesCategoryExist);
 
   if (doesCategoryExist) {
-    return res.sendResponse("400", "Category already exists", false);
+    return res.sendResponse(
+      "400",
+      { message: "Category already exists" },
+      false
+    );
   } else {
     const expenseCategory = await ExpenseCategory.create({
       familyId: family._id,

@@ -28,10 +28,14 @@ const useFamily = async (req: Request, res: Response, next: NextFunction) => {
       }
       next();
     } catch (error) {
-      return res.sendResponse("408", "Family not selected.", false);
+      return res.sendResponse(
+        "408",
+        { message: "Family not selected." },
+        false
+      );
     }
   } else {
-    return res.sendResponse("408", "Family not selected.", false);
+    return res.sendResponse("408", { message: "Family not selected." }, false);
   }
 };
 

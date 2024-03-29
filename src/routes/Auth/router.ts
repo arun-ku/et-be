@@ -14,7 +14,7 @@ router.post("/register", async (req: Request, res: Response) => {
     const doesUserExist = await Users.find({ phoneNumber }).lean().exec();
 
     if (doesUserExist.length) {
-      return res.sendResponse("400", "User already exists", false);
+      return res.sendResponse("400", { message: "User already exists" }, false);
     } else {
       await Users.insertMany([{ phoneNumber, name, password: enPass }]);
     }
@@ -42,10 +42,18 @@ router.post("/login", async (req: Request, res: Response) => {
       );
       return res.sendResponse("200", { token }, true);
     } else {
-      return res.sendResponse("400", "Password is incorrect", false);
+      return res.sendResponse(
+        "400",
+        { message: "Password is incorrect" },
+        false
+      );
     }
   } else {
-    return res.sendResponse("400", "No user found with this phone number", false);
+    return res.sendResponse(
+      "400",
+      { message: "No user found with this phone number" },
+      false
+    );
   }
 });
 

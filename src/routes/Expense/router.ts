@@ -34,7 +34,7 @@ router.post("/create", async (req, res) => {
 
     return res.sendResponse("200", expense, true);
   } else {
-    return res.sendResponse("408", "User not found.", false);
+    return res.sendResponse("408", { message: "User not found." }, false);
   }
 });
 
