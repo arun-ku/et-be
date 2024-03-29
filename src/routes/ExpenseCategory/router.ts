@@ -26,7 +26,6 @@ router.post("/create", async (req, res) => {
   })
     .lean()
     .exec();
-  console.log(doesCategoryExist);
 
   if (doesCategoryExist) {
     return res.sendResponse(
