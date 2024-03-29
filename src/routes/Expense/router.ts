@@ -9,7 +9,8 @@ router.get("/list", async (req, res) => {
   const expenses = await Expense.find({
     familyId: family._id,
   })
-    .populate("userId categoryId")
+    .populate("userId", "name")
+    .populate("categoryId", "categoryName categoryIcon")
     .lean()
     .exec();
 
