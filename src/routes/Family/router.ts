@@ -41,19 +41,30 @@ router.post("/join-request", async (req, res) => {
   );
 
   if (join) {
-    const request = await JoinRequests.findOne({
-      _id: new mongoose.Types.ObjectId(requestId),
-    });
+    try {
+      const request = await JoinRequests.findOne({
+        _id: new mongoose.Types.ObjectId(requestId),
+      });
 
-    await Family.updateOne(
-      { _id: request?.familyId },
-      { $push: { members: { userId: request?.toUser } } }
-    );
+      await Family.updateOne(
+        { _id: request?.familyId },
+        { $push: { members: { userId: request?.toUser } } }
+      );
 
-    await Users.updateOne(
-      { _id: request?.toUser },
-      { $push: { families: request?.familyId } }
-    );
+      await Users.updateOne(
+        { _id: request?.toUser },
+        { $push: { families: request?.familyId } }
+      );
+
+      res.sendResponse(
+        "200",
+        join ? "Request accepted" : "Request Declined",
+        join
+      );
+    } catch (e) {
+      res.sendResponse("400", "Request rejected", false);
+      console.log(e);
+    }
   }
 });
 
