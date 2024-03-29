@@ -20,12 +20,13 @@ router.post("/create", async (req, res) => {
 
   const ignoredCaseRegex = new RegExp(categoryName, "i");
 
-  const doesCategoryExist = await ExpenseCategory.find({
+  const doesCategoryExist = await ExpenseCategory.findOne({
     categoryName: ignoredCaseRegex,
     familyId: family._id,
   })
     .lean()
     .exec();
+  console.log(doesCategoryExist);
 
   if (doesCategoryExist) {
     return res.sendResponse("400", "Category already exists", false);
