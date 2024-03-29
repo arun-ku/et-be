@@ -18,13 +18,26 @@ router.post("/create", async (req, res) => {
   const { categoryName, categoryIcon } = req.body;
   const family = req.family;
 
-  const expenseCategory = await ExpenseCategory.create({
-    familyId: family._id,
-    categoryName,
-    categoryIcon,
-  });
+  const ignoredCaseRegex = new RegExp(categoryName, "i");
 
-  return res.sendResponse("200", expenseCategory, true);
+  const doesCategoryExist = await ExpenseCategory.find({
+    categoryName: ignoredCaseRegex,
+    familyId: family._id,
+  })
+    .lean()
+    .exec();
+
+  if (doesCategoryExist) {
+    return res.sendResponse("400", "Category already exists", false);
+  } else {
+    const expenseCategory = await ExpenseCategory.create({
+      familyId: family._id,
+      categoryName,
+      categoryIcon,
+    });
+
+    return res.sendResponse("200", expenseCategory, true);
+  }
 });
 
 export default router;
