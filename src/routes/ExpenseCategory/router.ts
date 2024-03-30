@@ -15,7 +15,7 @@ router.get("/list", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const { categoryName, categoryIcon } = req.body;
+  const { categoryName, categoryIcon, iconColor } = req.body;
   const family = req.family;
 
   const ignoredCaseRegex = new RegExp(categoryName, "i");
@@ -38,6 +38,7 @@ router.post("/create", async (req, res) => {
       familyId: family._id,
       categoryName,
       categoryIcon,
+      iconColor,
     });
 
     return res.sendResponse("200", expenseCategory, true);

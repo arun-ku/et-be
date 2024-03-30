@@ -5,7 +5,8 @@ mongoose.pluralize(null);
 const expenseCategorySchema = new mongoose.Schema({
   familyId: { type: mongoose.Schema.Types.ObjectId, ref: "Family" },
   categoryName: { type: String, required: true },
-  categoryIcon: { type: String },
+  iconColor: { type: String, required: true },
+  categoryIcon: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
