@@ -10,7 +10,7 @@ router.get("/list", async (req, res) => {
     familyId: family._id,
   })
     .populate("userId", "name")
-    .populate("categoryId", "categoryName categoryIcon")
+    .populate("categoryId", "categoryName categoryIcon iconColor")
     .lean()
     .exec();
 
