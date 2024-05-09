@@ -7,8 +7,34 @@ const router = Router();
 
 router.get("/listByCategories", async (req, res) => {
   const family = req.family;
+  const { month, year }: { month: string; year: string } = req.query as {
+    month: string;
+    year: string;
+  };
+
+  const updatedAtGt = new Date();
+  if (month && year) {
+    updatedAtGt.setMonth(parseInt(month));
+    updatedAtGt.setFullYear(parseInt(year));
+  }
+  updatedAtGt.setDate(1);
+  updatedAtGt.setHours(0);
+  const updatedAtLt = new Date();
+  if (month && year) {
+    updatedAtLt.setMonth(parseInt(month));
+    updatedAtLt.setFullYear(parseInt(year));
+  }
+  updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
+  updatedAtLt.setDate(1);
+  updatedAtLt.setHours(0);
+
   const expenses = await Expense.aggregate([
-    { $match: { familyId: family._id } },
+    {
+      $match: {
+        familyId: family._id,
+        createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
+      },
+    },
     {
       $group: {
         _id: "$categoryId",
@@ -40,8 +66,34 @@ router.get("/listByCategories", async (req, res) => {
 
 router.get("/listByUsers", async (req, res) => {
   const family = req.family;
+  const { month, year }: { month: string; year: string } = req.query as {
+    month: string;
+    year: string;
+  };
+
+  const updatedAtGt = new Date();
+  if (month && year) {
+    updatedAtGt.setMonth(parseInt(month));
+    updatedAtGt.setFullYear(parseInt(year));
+  }
+  updatedAtGt.setDate(1);
+  updatedAtGt.setHours(0);
+  const updatedAtLt = new Date();
+  if (month && year) {
+    updatedAtLt.setMonth(parseInt(month));
+    updatedAtLt.setFullYear(parseInt(year));
+  }
+  updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
+  updatedAtLt.setDate(1);
+  updatedAtLt.setHours(0);
+
   const expenses = await Expense.aggregate([
-    { $match: { familyId: family._id } },
+    {
+      $match: {
+        familyId: family._id,
+        createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
+      },
+    },
     {
       $group: {
         _id: "$userId",
@@ -73,6 +125,26 @@ router.get("/listByUsers", async (req, res) => {
 
 router.get("/listByUser/:id", async (req, res) => {
   const family = req.family;
+  const { month, year }: { month: string; year: string } = req.query as {
+    month: string;
+    year: string;
+  };
+
+  const updatedAtGt = new Date();
+  if (month && year) {
+    updatedAtGt.setMonth(parseInt(month));
+    updatedAtGt.setFullYear(parseInt(year));
+  }
+  updatedAtGt.setDate(1);
+  updatedAtGt.setHours(0);
+  const updatedAtLt = new Date();
+  if (month && year) {
+    updatedAtLt.setMonth(parseInt(month));
+    updatedAtLt.setFullYear(parseInt(year));
+  }
+  updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
+  updatedAtLt.setDate(1);
+  updatedAtLt.setHours(0);
   const expenses = await Expense.aggregate([
     {
       $facet: {
@@ -81,6 +153,7 @@ router.get("/listByUser/:id", async (req, res) => {
             $match: {
               familyId: family._id,
               userId: new mongoose.Types.ObjectId(req.params.id),
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
             },
           },
           { $sort: { createdAt: -1 } },
@@ -127,6 +200,7 @@ router.get("/listByUser/:id", async (req, res) => {
             $match: {
               familyId: family._id,
               userId: new mongoose.Types.ObjectId(req.params.id),
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
             },
           },
           {
@@ -151,6 +225,26 @@ router.get("/listByUser/:id", async (req, res) => {
 
 router.get("/listByCategory/:id", async (req, res) => {
   const family = req.family;
+  const { month, year }: { month: string; year: string } = req.query as {
+    month: string;
+    year: string;
+  };
+
+  const updatedAtGt = new Date();
+  if (month && year) {
+    updatedAtGt.setMonth(parseInt(month));
+    updatedAtGt.setFullYear(parseInt(year));
+  }
+  updatedAtGt.setDate(1);
+  updatedAtGt.setHours(0);
+  const updatedAtLt = new Date();
+  if (month && year) {
+    updatedAtLt.setMonth(parseInt(month));
+    updatedAtLt.setFullYear(parseInt(year));
+  }
+  updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
+  updatedAtLt.setDate(1);
+  updatedAtLt.setHours(0);
   const expenses = await Expense.aggregate([
     {
       $facet: {
@@ -159,6 +253,7 @@ router.get("/listByCategory/:id", async (req, res) => {
             $match: {
               familyId: family._id,
               categoryId: new mongoose.Types.ObjectId(req.params.id),
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
             },
           },
           { $sort: { createdAt: -1 } },
@@ -205,6 +300,7 @@ router.get("/listByCategory/:id", async (req, res) => {
             $match: {
               familyId: family._id,
               categoryId: new mongoose.Types.ObjectId(req.params.id),
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
             },
           },
           {
