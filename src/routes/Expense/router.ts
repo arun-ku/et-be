@@ -229,30 +229,37 @@ router.get("/listByCategory/:id", async (req, res) => {
 
 router.get("/list", async (req, res) => {
   const family = req.family;
-  // const expenses = await Expense.find({
-  //   familyId: family._id,
-  // })
-  //   .sort({ createdAt: -1 })
-  //   .populate("userId", "name")
-  //   .populate("categoryId", "categoryName categoryIcon iconColor")
-  //   .lean()
-  //   .exec();
+  const { month, year }: { month: string; year: string } = req.query as {
+    month: string;
+    year: string;
+  };
 
-  // const totalAmount = await Expense.aggregate([
-  //   { $match: { familyId: family._id } },
-  //   {
-  //     $group: {
-  //       _id: null,
-  //       totalAmount: { $sum: "$amount" },
-  //     },
-  //   },
-  // ]);
+  const updatedAtGt = new Date();
+  if (month && year) {
+    updatedAtGt.setMonth(parseInt(month));
+    updatedAtGt.setFullYear(parseInt(year));
+  }
+  updatedAtGt.setDate(1);
+  updatedAtGt.setHours(0);
+  const updatedAtLt = new Date();
+  if (month && year) {
+    updatedAtLt.setMonth(parseInt(month));
+    updatedAtLt.setFullYear(parseInt(year));
+  }
+  updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
+  updatedAtLt.setDate(1);
+  updatedAtLt.setHours(0);
 
   const newResult = await Expense.aggregate([
     {
       $facet: {
         expenses: [
-          { $match: { familyId: family._id } },
+          {
+            $match: {
+              familyId: family._id,
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
+            },
+          },
           { $sort: { createdAt: -1 } },
           {
             $lookup: {
@@ -293,6 +300,12 @@ router.get("/list", async (req, res) => {
           },
         ],
         totalAmount: [
+          {
+            $match: {
+              familyId: family._id,
+              createdAt: { $gt: updatedAtGt, $lt: updatedAtLt },
+            },
+          },
           {
             $group: {
               _id: null,

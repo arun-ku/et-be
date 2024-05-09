@@ -10,7 +10,11 @@ router.post("/create", async (req, res) => {
   const { familyName } = req.body;
   const user = await Users.findOne({ phoneNumber: req.user.phoneNumber });
 
-  const family = await Family.create({ familyName, members: [user?._id] });
+  const family = await Family.create({
+    familyName,
+    members: [user?._id],
+    owner: user?._id,
+  });
   await Users.updateOne(
     { phoneNumber: req.user.phoneNumber },
     { families: [family._id] }
@@ -48,7 +52,7 @@ router.post("/join-request", async (req, res) => {
 
       await Family.updateOne(
         { _id: request?.familyId },
-        { $push: { members: { userId: request?.toUser } } }
+        { $push: { members: request?.toUser } }
       );
 
       await Users.updateOne(
@@ -66,6 +70,15 @@ router.post("/join-request", async (req, res) => {
       console.log(e);
     }
   }
+});
+
+router.get("/get-join-requests", async (req, res) => {
+  const user = await Users.findOne({ phoneNumber: req.user.phoneNumber });
+  const requests = await JoinRequests.find({ toUser: user?._id })
+    .populate("fromUser", "name")
+    .populate("familyId", "familyName");
+
+  res.sendResponse("200", requests, true);
 });
 
 router.get("/get-all", async (req, res) => {
