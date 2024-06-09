@@ -7,22 +7,21 @@ const router = Router();
 
 router.get("/listByCategories", async (req, res) => {
   const family = req.family;
-  const { month, year }: { month: string; year: string } = req.query as {
-    month: string;
-    year: string;
-  };
-
+  const {
+    currentMonth,
+    currentYear,
+  }: { currentMonth: number; currentYear: number } = req;
   const updatedAtGt = new Date();
-  if (month && year) {
-    updatedAtGt.setMonth(parseInt(month));
-    updatedAtGt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtGt.setMonth(currentMonth);
+    updatedAtGt.setFullYear(currentYear);
   }
   updatedAtGt.setDate(1);
   updatedAtGt.setHours(0);
   const updatedAtLt = new Date();
-  if (month && year) {
-    updatedAtLt.setMonth(parseInt(month));
-    updatedAtLt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtLt.setMonth(currentMonth);
+    updatedAtLt.setFullYear(currentYear);
   }
   updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
   updatedAtLt.setDate(1);
@@ -66,22 +65,22 @@ router.get("/listByCategories", async (req, res) => {
 
 router.get("/listByUsers", async (req, res) => {
   const family = req.family;
-  const { month, year }: { month: string; year: string } = req.query as {
-    month: string;
-    year: string;
-  };
+  const {
+    currentMonth,
+    currentYear,
+  }: { currentMonth: number; currentYear: number } = req;
 
   const updatedAtGt = new Date();
-  if (month && year) {
-    updatedAtGt.setMonth(parseInt(month));
-    updatedAtGt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtGt.setMonth(currentMonth);
+    updatedAtGt.setFullYear(currentYear);
   }
   updatedAtGt.setDate(1);
   updatedAtGt.setHours(0);
   const updatedAtLt = new Date();
-  if (month && year) {
-    updatedAtLt.setMonth(parseInt(month));
-    updatedAtLt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtLt.setMonth(currentMonth);
+    updatedAtLt.setFullYear(currentYear);
   }
   updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
   updatedAtLt.setDate(1);
@@ -125,26 +124,27 @@ router.get("/listByUsers", async (req, res) => {
 
 router.get("/listByUser/:id", async (req, res) => {
   const family = req.family;
-  const { month, year }: { month: string; year: string } = req.query as {
-    month: string;
-    year: string;
-  };
+  const {
+    currentMonth,
+    currentYear,
+  }: { currentMonth: number; currentYear: number } = req;
 
   const updatedAtGt = new Date();
-  if (month && year) {
-    updatedAtGt.setMonth(parseInt(month));
-    updatedAtGt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtGt.setMonth(currentMonth);
+    updatedAtGt.setFullYear(currentYear);
   }
   updatedAtGt.setDate(1);
   updatedAtGt.setHours(0);
   const updatedAtLt = new Date();
-  if (month && year) {
-    updatedAtLt.setMonth(parseInt(month));
-    updatedAtLt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtLt.setMonth(currentMonth);
+    updatedAtLt.setFullYear(currentYear);
   }
   updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
   updatedAtLt.setDate(1);
   updatedAtLt.setHours(0);
+
   const expenses = await Expense.aggregate([
     {
       $facet: {
@@ -225,26 +225,27 @@ router.get("/listByUser/:id", async (req, res) => {
 
 router.get("/listByCategory/:id", async (req, res) => {
   const family = req.family;
-  const { month, year }: { month: string; year: string } = req.query as {
-    month: string;
-    year: string;
-  };
+  const {
+    currentMonth,
+    currentYear,
+  }: { currentMonth: number; currentYear: number } = req;
 
   const updatedAtGt = new Date();
-  if (month && year) {
-    updatedAtGt.setMonth(parseInt(month));
-    updatedAtGt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtGt.setMonth(currentMonth);
+    updatedAtGt.setFullYear(currentYear);
   }
   updatedAtGt.setDate(1);
   updatedAtGt.setHours(0);
   const updatedAtLt = new Date();
-  if (month && year) {
-    updatedAtLt.setMonth(parseInt(month));
-    updatedAtLt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtLt.setMonth(currentMonth);
+    updatedAtLt.setFullYear(currentYear);
   }
   updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
   updatedAtLt.setDate(1);
   updatedAtLt.setHours(0);
+
   const expenses = await Expense.aggregate([
     {
       $facet: {
@@ -325,22 +326,21 @@ router.get("/listByCategory/:id", async (req, res) => {
 
 router.get("/list", async (req, res) => {
   const family = req.family;
-  const { month, year }: { month: string; year: string } = req.query as {
-    month: string;
-    year: string;
-  };
-
+  const {
+    currentMonth,
+    currentYear,
+  }: { currentMonth: number; currentYear: number } = req;
   const updatedAtGt = new Date();
-  if (month && year) {
-    updatedAtGt.setMonth(parseInt(month));
-    updatedAtGt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtGt.setMonth(currentMonth);
+    updatedAtGt.setFullYear(currentYear);
   }
   updatedAtGt.setDate(1);
   updatedAtGt.setHours(0);
   const updatedAtLt = new Date();
-  if (month && year) {
-    updatedAtLt.setMonth(parseInt(month));
-    updatedAtLt.setFullYear(parseInt(year));
+  if (currentMonth && currentYear) {
+    updatedAtLt.setMonth(currentMonth);
+    updatedAtLt.setFullYear(currentYear);
   }
   updatedAtLt.setMonth(updatedAtLt.getMonth() + 1);
   updatedAtLt.setDate(1);
@@ -442,7 +442,6 @@ router.get("/list/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
   const family = req.family;
-  console.log(req.params.id);
   const expense = await Expense.findOneAndDelete({
     _id: req.params.id,
     familyId: family._id,
